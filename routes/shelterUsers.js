@@ -19,7 +19,6 @@ router.get(
 	requireShelterAuth,
 	asyncHandler(async (req, res, next) => {
 		const shelterUserId = parseInt(req.params.id, 10);
-		console.log("yyyyy", shelterUserId);
 
 		// if (req.user.id !== shelterUserId || req.role !== "Shelter") {
 		// 	console.log("rkkkkk", req.user);
@@ -113,7 +112,6 @@ router.post(
 		});
 
 		const tokenShelter = getShelterToken(user);
-		console.log("checkpost", tokenShelter);
 		const role = "Shelter";
 		res.status(201).json({
 			user: { id: user.id },

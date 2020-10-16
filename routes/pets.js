@@ -92,7 +92,6 @@ router.post(
 	validatePet,
 	requireShelterAuth,
 	asyncHandler(async (req, res) => {
-		console.log("VVVV", req);
 		if (req.user === undefined) {
 			const err = new Error("Unauthorized");
 			err.status = 401;
@@ -114,8 +113,6 @@ router.post(
 		} = req.body;
 		const isFile = _.get(req, "file.path", "");
 		const formatUrlFile = isFile ? `http://localhost:8080/${isFile}` : photo;
-		console.log("IMAGRe", photo);
-		console.log("ISFILE", isFile);
 		const pet = await Pet.create({
 			breedId,
 			petName,
@@ -176,7 +173,6 @@ router.delete(
 	asyncHandler(async (req, res, next) => {
 		// const { id } = req.body;
 		const id = req.params.id;
-		console.log("bakkkkkk", id);
 		const pet = await Pet.findOne({
 			where: {
 				// id: req.params.id,
