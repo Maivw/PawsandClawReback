@@ -92,6 +92,7 @@ router.post(
 	validatePet,
 	requireShelterAuth,
 	asyncHandler(async (req, res) => {
+		console.log("CHeck1");
 		if (req.user === undefined) {
 			const err = new Error("Unauthorized");
 			err.status = 401;
@@ -112,7 +113,10 @@ router.post(
 			isOkayKids,
 		} = req.body;
 		const isFile = _.get(req, "file.path", "");
-		const formatUrlFile = isFile ? `http://localhost:8080/${isFile}` : photo;
+		console.log("CHeck2");
+		const formatUrlFile = isFile
+			? `https://pawsandclawback.herokuapp.com/${isFile}`
+			: photo;
 		const pet = await Pet.create({
 			breedId,
 			petName,
@@ -126,6 +130,7 @@ router.post(
 			isOkayKids,
 			shelterId,
 		});
+		console.log("CHeck3");
 		res.json({ pet });
 	})
 );
@@ -163,21 +168,13 @@ router.delete(
 	"/:id",
 	requireShelterAuth,
 	asyncHandler(async (req, res, next) => {
-		// const { id } = req.body;
 		const id = req.params.id;
 		const pet = await Pet.findOne({
 			where: {
-				// id: req.params.id,
 				id,
 			},
 		});
-		// if (req.user.id !== pet.shelterId) {
-		// 	const err = new Error("Unauthorized");
-		// 	err.status = 401;
-		// 	err.message = "You are not authorized to delete this pet.";
-		// 	err.title = "Unauthorized";
-		// 	throw err;
-		// }
+
 		if (pet) {
 			await pet.destroy();
 			res.json({ message: `Deleted pet with id of ${req.params.id}.`, pet });
