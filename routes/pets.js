@@ -112,7 +112,9 @@ router.post(
 			isOkayKids,
 		} = req.body;
 		const isFile = _.get(req, "file.path", "");
-		const formatUrlFile = isFile ? `http://localhost:8080/${isFile}` : photo;
+		const formatUrlFile = isFile
+			? `https://pawsandclawback.herokuapp.com/${isFile}`
+			: photo;
 		const pet = await Pet.create({
 			breedId,
 			petName,
@@ -140,14 +142,6 @@ router.put(
 				id: req.params.id,
 			},
 		});
-
-		// if (req.user.id !== pet.shelterId) {
-		// 	const err = new Error("Unauthorized");
-		// 	err.status = 401;
-		// 	err.message = "You are not authorized to edit this pet's information.";
-		// 	err.title = "Unauthorized";
-		// 	throw err;
-		// }
 		if (pet) {
 			await pet.update({
 				petName: req.body.petName,
