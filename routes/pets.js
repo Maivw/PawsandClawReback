@@ -112,7 +112,7 @@ router.post(
 			isOkayKids,
 		} = req.body;
 		const isFile = _.get(req, "file.path", "");
-		const formatUrlFile = isFile ? `http://localhost:8080${isFile}` : photo;
+		const formatUrlFile = isFile ? `http://localhost:8080/${isFile}` : photo;
 		const pet = await Pet.create({
 			breedId,
 			petName,
